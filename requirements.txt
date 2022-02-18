@@ -1,0 +1,5 @@
+arpa
+wget
+Cython
+nemo_toolkit[all]
+pyctcdecode
