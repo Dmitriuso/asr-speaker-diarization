@@ -49,7 +49,7 @@ cfg.diarizer.asr.parameters.colored_text = False
 cfg.diarizer.asr.parameters.break_lines = False
 
 arpa_model_path = str(data_dir / '4gram_big.arpa')
-cfg.diarizer.asr.ctc_decoder_parameters.pretrained_language_model = arpa_model_path
+# cfg.diarizer.asr.ctc_decoder_parameters.pretrained_language_model = arpa_model_path
 
 cfg.diarizer.asr.realigning_lm_parameters.arpa_language_model = arpa_model_path
 cfg.diarizer.asr.realigning_lm_parameters.logprob_diff_threshold = 1.2
