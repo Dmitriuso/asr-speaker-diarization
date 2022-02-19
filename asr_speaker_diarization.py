@@ -28,7 +28,7 @@ else:
 
 cfg.diarizer.manifest_filepath = str(data_dir / 'input_manifest.json')
 
-pretrained_speaker_model = 'titanet_large'
+pretrained_speaker_model = 'ecapa_tdnn' # 'titanet_large'
 cfg.diarizer.manifest_filepath = cfg.diarizer.manifest_filepath
 cfg.diarizer.out_dir = str(data_dir) #Directory to store intermediate files and prediction outputs
 cfg.diarizer.speaker_embeddings.model_path = pretrained_speaker_model
@@ -37,7 +37,7 @@ cfg.diarizer.speaker_embeddings.parameters.shift_length_in_sec = 0.75
 cfg.diarizer.clustering.parameters.oracle_num_speakers = False
 
 # Using VAD generated from ASR timestamps
-asr_ckpt = 'stt_fr_citrinet_1024_gamma_0_25' #'stt_fr_quartznet15x5.nemo'
+asr_ckpt = 'stt_fr_contextnet_1024' #'stt_fr_quartznet15x5.nemo'
 cfg.diarizer.asr.model_path = asr_ckpt # 'stt_fr_quartznet15x5'
 cfg.diarizer.oracle_vad = False # ----> Not using oracle VAD
 cfg.diarizer.asr.parameters.asr_batch_size = 2
