@@ -37,7 +37,7 @@ cfg.diarizer.speaker_embeddings.parameters.shift_length_in_sec = 0.75
 cfg.diarizer.clustering.parameters.oracle_num_speakers = False
 
 # Using VAD generated from ASR timestamps
-asr_ckpt = 'models/quartznet/stt_fr_quartznet15x5.nemo' #'stt_fr_quartznet15x5.nemo'
+asr_ckpt = 'models/stt_fr_quartznet15x5.nemo' #'stt_fr_quartznet15x5.nemo'
 cfg.diarizer.asr.model_path = asr_ckpt # 'stt_fr_quartznet15x5'
 cfg.diarizer.oracle_vad = False # ----> Not using oracle VAD
 cfg.diarizer.asr.parameters.asr_batch_size = 2
