@@ -1,4 +1,3 @@
-import os
 import wget
 import gzip
 import shutil
@@ -18,7 +17,7 @@ def gunzip(file_path, output_path):
         f_out.close()
 
 
-lm_file = f'{data_dir}/4gram_big.arpa'
+lm_file = data_dir / '4gram_big.arpa'
 
 if lm_file.exists():
     pass
@@ -27,15 +26,15 @@ else:
     f = wget.download(ARPA_URL, data_dir)
     gunzip(f, f.replace(".gz", ""))
 
-cfg.diarizer.manifest_filepath = os.path.join(data_dir, 'input_manifest.json')
+cfg.diarizer.manifest_filepath = str(data_dir / 'input_manifest.json')
 
-pretrained_speaker_model='ecapa_tdnn'
+pretrained_speaker_model = 'ecapa_tdnn'
 cfg.diarizer.manifest_filepath = cfg.diarizer.manifest_filepath
-cfg.diarizer.out_dir = data_dir #Directory to store intermediate files and prediction outputs
+cfg.diarizer.out_dir = str(data_dir) #Directory to store intermediate files and prediction outputs
 cfg.diarizer.speaker_embeddings.model_path = pretrained_speaker_model
 cfg.diarizer.speaker_embeddings.parameters.window_length_in_sec = 1.5
 cfg.diarizer.speaker_embeddings.parameters.shift_length_in_sec = 0.75
-cfg.diarizer.clustering.parameters.oracle_num_speakers=False
+cfg.diarizer.clustering.parameters.oracle_num_speakers = False
 
 # Using VAD generated from ASR timestamps
 asr_ckpt = 'stt_fr_citrinet_1024_gamma_0_25' #'stt_fr_quartznet15x5.nemo'
@@ -49,7 +48,7 @@ cfg.diarizer.asr.parameters.lenient_overlap_WDER = True
 cfg.diarizer.asr.parameters.colored_text = False
 cfg.diarizer.asr.parameters.break_lines = False
 
-arpa_model_path = os.path.join(data_dir, '4gram_big.arpa')
+arpa_model_path = str(data_dir / '4gram_big.arpa')
 # cfg.diarizer.asr.ctc_decoder_parameters.pretrained_language_model = arpa_model_path
 
 cfg.diarizer.asr.realigning_lm_parameters.arpa_language_model = arpa_model_path
@@ -64,6 +63,6 @@ asr_diar_offline = ASR_DIAR_OFFLINE(**cfg.diarizer)
 asr_diar_offline.word_ts_anchor_offset = asr_ts_decoder.word_ts_anchor_offset
 
 diar_hyp, diar_score = asr_diar_offline.run_diarization(cfg, word_ts_hyp)
-predicted_speaker_label_rttm_path = f"{data_dir}/pred_rttms/mondialisation_full.rttm"
+predicted_speaker_label_rttm_path = str(data_dir / 'pred_rttms/mondialisation_full.rttm')
 
 asr_diar_offline.get_transcript_with_speaker_labels(diar_hyp, word_hyp, word_ts_hyp)
