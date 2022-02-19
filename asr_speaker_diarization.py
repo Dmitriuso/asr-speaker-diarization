@@ -37,12 +37,12 @@ cfg.diarizer.speaker_embeddings.parameters.shift_length_in_sec = 0.75
 cfg.diarizer.clustering.parameters.oracle_num_speakers = False
 
 # Using VAD generated from ASR timestamps
-asr_ckpt = 'models/stt_fr_quartznet15x5.nemo' #'stt_fr_quartznet15x5.nemo'
+asr_ckpt = 'stt_fr_conformer_ctc_large' #'stt_fr_quartznet15x5.nemo'
 cfg.diarizer.asr.model_path = asr_ckpt # 'stt_fr_quartznet15x5'
 cfg.diarizer.oracle_vad = False # ----> Not using oracle VAD
 cfg.diarizer.asr.parameters.asr_batch_size = 2
 cfg.diarizer.asr.parameters.asr_based_vad = True
-cfg.diarizer.asr.parameters.threshold = 20 # ASR based VAD threshold: If 100, all silences under 1 sec are ignored.
+cfg.diarizer.asr.parameters.threshold = 50 # ASR based VAD threshold: If 100, all silences under 1 sec are ignored.
 cfg.diarizer.asr.parameters.decoder_delay_in_sec = None # Decoder delay is compensated for 0.2 sec
 cfg.diarizer.asr.parameters.lenient_overlap_WDER = True
 cfg.diarizer.asr.parameters.colored_text = False
