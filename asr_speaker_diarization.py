@@ -24,7 +24,7 @@ gunzip(f, f.replace(".gz", ""))
 
 cfg.diarizer.manifest_filepath = os.path.join(data_dir, 'input_manifest.json')
 
-pretrained_speaker_model='titanet_large'
+pretrained_speaker_model='ecapa_tdnn'
 cfg.diarizer.manifest_filepath = cfg.diarizer.manifest_filepath
 cfg.diarizer.out_dir = data_dir #Directory to store intermediate files and prediction outputs
 cfg.diarizer.speaker_embeddings.model_path = pretrained_speaker_model
