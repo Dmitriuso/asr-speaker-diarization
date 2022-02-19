@@ -28,7 +28,7 @@ else:
 
 cfg.diarizer.manifest_filepath = str(data_dir / 'input_manifest.json')
 
-pretrained_speaker_model = 'ecapa_tdnn'
+pretrained_speaker_model = 'titanet_large'
 cfg.diarizer.manifest_filepath = cfg.diarizer.manifest_filepath
 cfg.diarizer.out_dir = str(data_dir) #Directory to store intermediate files and prediction outputs
 cfg.diarizer.speaker_embeddings.model_path = pretrained_speaker_model
