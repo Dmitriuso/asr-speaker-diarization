@@ -18,9 +18,14 @@ def gunzip(file_path, output_path):
         f_out.close()
 
 
-ARPA_URL = 'https://kaldi-asr.org/models/5/4gram_big.arpa.gz'
-f = wget.download(ARPA_URL, data_dir)
-gunzip(f, f.replace(".gz", ""))
+lm_file = f'{data_dir}/4gram_big.arpa'
+
+if lm_file.exists():
+    pass
+else:
+    ARPA_URL = 'https://kaldi-asr.org/models/5/4gram_big.arpa.gz'
+    f = wget.download(ARPA_URL, data_dir)
+    gunzip(f, f.replace(".gz", ""))
 
 cfg.diarizer.manifest_filepath = os.path.join(data_dir, 'input_manifest.json')
 
@@ -38,14 +43,14 @@ cfg.diarizer.asr.model_path = asr_ckpt # 'stt_fr_quartznet15x5'
 cfg.diarizer.oracle_vad = False # ----> Not using oracle VAD
 cfg.diarizer.asr.parameters.asr_batch_size = 2
 cfg.diarizer.asr.parameters.asr_based_vad = True
-cfg.diarizer.asr.parameters.threshold = 50 # ASR based VAD threshold: If 100, all silences under 1 sec are ignored.
+cfg.diarizer.asr.parameters.threshold = 20 # ASR based VAD threshold: If 100, all silences under 1 sec are ignored.
 cfg.diarizer.asr.parameters.decoder_delay_in_sec = None # Decoder delay is compensated for 0.2 sec
 cfg.diarizer.asr.parameters.lenient_overlap_WDER = True
 cfg.diarizer.asr.parameters.colored_text = False
 cfg.diarizer.asr.parameters.break_lines = False
 
 arpa_model_path = os.path.join(data_dir, '4gram_big.arpa')
-cfg.diarizer.asr.ctc_decoder_parameters.pretrained_language_model = arpa_model_path
+# cfg.diarizer.asr.ctc_decoder_parameters.pretrained_language_model = arpa_model_path
 
 cfg.diarizer.asr.realigning_lm_parameters.arpa_language_model = arpa_model_path
 cfg.diarizer.asr.realigning_lm_parameters.logprob_diff_threshold = 1.2
