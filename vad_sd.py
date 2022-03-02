@@ -66,7 +66,7 @@ sd_model = ClusteringDiarizer(cfg=cfg)
 
 if __name__ == '__main__':
     sd_model.diarize()
-    smooth_rttm(str(OUTPUT / f"pred_rttms/{file_name}.rttm"), str(OUTPUT))
+    smooth_rttm(str(OUTPUT / f"pred_rttms/{file_name}.rttm"), str(OUTPUT / "pred_rttms"))
 
 
 
