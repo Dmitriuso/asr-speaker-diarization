@@ -3,7 +3,7 @@ from pathlib import Path
 
 # ROOT = Path(__file__).parent.parent
 # RTTM = ROOT / "data/pred_rttms"
-# file_name = "mondialisation_30min_own"
+# input_file_path = "mondialisation_30min_own"
 
 
 def add_up_durations(values_list, start, end):
@@ -13,10 +13,10 @@ def add_up_durations(values_list, start, end):
     return counter
 
 
-def smooth_rttm(file_name: str, output_path: str):
-    if ".rttm" not in file_name:
+def smooth_rttm(input_file_path: str, output_path: str):
+    if ".rttm" not in input_file_path:
         print("Unknown format: enter path to an .rtttm file")
-    rttm_file = open(file_name).readlines()
+    rttm_file = open(input_file_path).readlines()
 
     time_stamps, speakers = [], []
 
@@ -58,7 +58,8 @@ def smooth_rttm(file_name: str, output_path: str):
             diarization = (f'{float(st): .3f}', f'{float(dur): .3f}', sp)
             new_diarization.append(diarization)
 
-        with open(f"{output_path}/smooth_{Path(file_name).name}", "wt") as f:
+        file_name = Path(input_file_path).stem
+        with open(f"{output_path}/smooth_{file_name}", "wt") as f:
             for trio in new_diarization:
                 f.write(f"SPEAKER {file_name} 1   " + str(trio[0]) + "   " + str(trio[1]) + " <NA> <NA> " + trio[2] + " <NA> <NA>")
                 f.write("\n")
