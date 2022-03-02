@@ -1,5 +1,7 @@
-from nemo.collections.asr.parts.utils.speaker_utils import rttm_to_labels, labels_to_pyannote_object
 from pathlib import Path
+
+from nemo.collections.asr.parts.utils.speaker_utils import (
+    labels_to_pyannote_object, rttm_to_labels)
 
 ROOT = Path(__file__).parent.parent
 rttm_dir = ROOT / "data/pred_rttms"
@@ -10,6 +12,6 @@ labels = rttm_to_labels(mondialisation_rttm)
 reference = labels_to_pyannote_object(labels)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(labels)
     reference

@@ -1,16 +1,19 @@
-from pathlib import Path
 import re
+from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 bench_dir = ROOT / "data/radiofrance_bench"
 rttm_dir = ROOT / "data/pred_rttms"
 
-bench_file = bench_dir / "youtube=p601i1-vTjI/sources/transcript_AMBERSCRIPT_WITH_DIARIZATION.txt"
+bench_file = (
+    bench_dir
+    / "youtube=p601i1-vTjI/sources/transcript_AMBERSCRIPT_WITH_DIARIZATION.txt"
+)
 
 
 def convert_time_stamp(time_stamp: str):
-    parsed = re.findall(r'\d+', time_stamp)
-    return int(parsed[0])*3600 + int(parsed[1])*60 + int(parsed[2])
+    parsed = re.findall(r"\d+", time_stamp)
+    return int(parsed[0]) * 3600 + int(parsed[1]) * 60 + int(parsed[2])
 
 
 def extract_time_stamps(file_path, first_pattern, second_pattern):
@@ -35,12 +38,12 @@ def extract_time_stamps(file_path, first_pattern, second_pattern):
     for stamp in time_stamps:
         sec_stamp = convert_time_stamp(stamp)
         start.append(sec_stamp)
-    for idx in range(len(start)-1):
-        duration.append(start[idx+1] - start[idx])
+    for idx in range(len(start) - 1):
+        duration.append(start[idx + 1] - start[idx])
     duration.append(0)
     speakers_items = []
     for s in speakers:
-        ns = re.sub(r'\s+', '_', s)
+        ns = re.sub(r"\s+", "_", s)
         speakers_items.append(ns)
     joint_list = []
     for i, j, k in zip(start, duration, speakers_items):
@@ -55,9 +58,19 @@ def extract_time_stamps(file_path, first_pattern, second_pattern):
     return joint_list
 
 
-sonix_time_stamps = extract_time_stamps(bench_file, r'(S|s)peaker(\s+)?\d', r'(\[)?\d+\:\d+\:\d+(\])?')
+sonix_time_stamps = extract_time_stamps(
+    bench_file, r"(S|s)peaker(\s+)?\d", r"(\[)?\d+\:\d+\:\d+(\])?"
+)
 
 with open(str(rttm_dir / "Tjl_time_stamps_bench.rttm"), "wt") as f:
     for time_stamp in sonix_time_stamps:
-        f.write("SPEAKER mondialisation_full 1   " + str(time_stamp[0]) + "   " + str(time_stamp[1]) + " <NA> <NA> " + time_stamp[2] + " <NA> <NA>")
+        f.write(
+            "SPEAKER mondialisation_full 1   "
+            + str(time_stamp[0])
+            + "   "
+            + str(time_stamp[1])
+            + " <NA> <NA> "
+            + time_stamp[2]
+            + " <NA> <NA>"
+        )
         f.write("\n")
