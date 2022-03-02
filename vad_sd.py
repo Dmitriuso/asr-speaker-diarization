@@ -16,6 +16,7 @@ OUTPUT.mkdir(parents=True, exist_ok=True)
 
 file_name = 'youtube=p601i1-vTjI'
 own_file = str(DATA / f'videos_audios/{file_name}.wav')
+bench_rttm = str(DATA / "bench_rttms/Tjl_time_stamps_bench.rttm")
 
 CONFIG_URL = "https://raw.githubusercontent.com/NVIDIA/NeMo/main/examples/speaker_tasks/diarization/conf/offline_diarization.yaml"
 
@@ -29,10 +30,11 @@ cfg = OmegaConf.load(CONFIG)
 meta = {
     'audio_filepath': own_file,
     'offset': 0,
-    'duration':None,
+    'duration': None,
     'label': 'infer',
     'text': '-',
     'num_speakers': None,
+    'rttm_filepath': bench_rttm,
     'uem_filepath' : None
 }
 
@@ -67,6 +69,3 @@ sd_model = ClusteringDiarizer(cfg=cfg)
 if __name__ == '__main__':
     sd_model.diarize()
     smooth_rttm(str(OUTPUT / f"pred_rttms/{file_name}.rttm"), str(OUTPUT / "pred_rttms"))
-
-
-
