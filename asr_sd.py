@@ -4,9 +4,6 @@ import shutil
 from nemo.collections.asr.parts.utils.decoder_timestamps_utils import ASR_TIMESTAMPS
 from nemo.collections.asr.parts.utils.diarization_utils import ASR_DIAR_OFFLINE
 
-import pprint
-# pp = pprint.PrettyPrinter(indent=4)
-
 from load_config import data_dir, cfg
 
 
