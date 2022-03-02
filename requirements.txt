@@ -2,4 +2,5 @@ arpa
 wget
 Cython
 nemo_toolkit[all]
+torchaudio
 pyctcdecode

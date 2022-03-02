@@ -6,13 +6,16 @@ from omegaconf import OmegaConf
 
 from nemo.collections.asr.models import ClusteringDiarizer
 
+from tools.rttm_smoothing import smooth_rttm
+
 
 ROOT = Path(__file__).parent
 DATA = ROOT / "data"
 OUTPUT = ROOT / "outputs"
 OUTPUT.mkdir(parents=True, exist_ok=True)
 
-own_file = str(DATA / 'videos_audios/youtube=p601i1-vTjI.wav')
+file_name = 'youtube=p601i1-vTjI'
+own_file = str(DATA / f'videos_audios/{file_name}.wav')
 
 CONFIG_URL = "https://raw.githubusercontent.com/NVIDIA/NeMo/main/examples/speaker_tasks/diarization/conf/offline_diarization.yaml"
 
@@ -22,7 +25,6 @@ else:
     CONFIG = DATA / 'offline_diarization_with_asr.yaml'
 
 cfg = OmegaConf.load(CONFIG)
-
 
 meta = {
     'audio_filepath': own_file,
@@ -35,7 +37,6 @@ meta = {
 }
 
 input_manifest_dir = str(DATA / 'input_manifest_vad_sd.json')
-print(type(input_manifest_dir))
 with open(input_manifest_dir, 'w') as fp:
     json.dump(meta, fp)
     fp.write('\n')
@@ -65,5 +66,7 @@ sd_model = ClusteringDiarizer(cfg=cfg)
 
 if __name__ == '__main__':
     sd_model.diarize()
+    smooth_rttm(str(OUTPUT / f"pred_rttms/{file_name}.rttm"), str(OUTPUT))
+
 
 
