@@ -58,7 +58,7 @@ def smooth_rttm(file_name: str, output_path: str):
             diarization = (f'{float(st): .3f}', f'{float(dur): .3f}', sp)
             new_diarization.append(diarization)
 
-        with open(f"{output_path}/smooth_{file_name}", "wt") as f:
+        with open(f"{output_path}/smooth_{Path(file_name).name}", "wt") as f:
             for trio in new_diarization:
                 f.write(f"SPEAKER {file_name} 1   " + str(trio[0]) + "   " + str(trio[1]) + " <NA> <NA> " + trio[2] + " <NA> <NA>")
                 f.write("\n")
