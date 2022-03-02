@@ -59,7 +59,7 @@ def smooth_rttm(input_file_path: str, output_path: str):
             new_diarization.append(diarization)
 
         file_name = Path(input_file_path).stem
-        with open(f"{output_path}/smooth_{file_name}", "wt") as f:
+        with open(f"{output_path}/{file_name}_smooth.rttm", "wt") as f:
             for trio in new_diarization:
                 f.write(f"SPEAKER {file_name} 1   " + str(trio[0]) + "   " + str(trio[1]) + " <NA> <NA> " + trio[2] + " <NA> <NA>")
                 f.write("\n")
